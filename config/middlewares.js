@@ -1,21 +1,33 @@
 module.exports = [
-  'strapi::errors',
-  'strapi::security',
+  "strapi::logger",
+  "strapi::errors",
   {
-    name: 'strapi::cors',
+    name: "strapi::security",
     config: {
-      origin: [
-        'https://ecommerce-frontend-dm2b.vercel.app', // deployed frontend
-        'http://localhost:3000',                       // local frontend
-      ],
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          "connect-src": ["'self'", "https:", "http:"],
+          "img-src": ["'self'", "data:", "blob:", "https:"],
+          "media-src": ["'self'", "data:", "blob:", "https:"],
+        },
+      },
     },
   },
-  'strapi::poweredBy',
-  'strapi::logger',
-  'strapi::query',
-  'strapi::body',
-  'strapi::session',
-  'strapi::favicon',
-  'strapi::public',
+  {
+    name: "strapi::cors",
+    config: {
+      enabled: true,
+      origin: [
+        "http://localhost:3000",
+        "https://ecommerce-frontend-dm2b.vercel.app",
+      ],
+    },
+  },
+  "strapi::poweredBy",
+  "strapi::query",
+  "strapi::body",
+  "strapi::session",
+  "strapi::favicon",
+  "strapi::public",
 ];
